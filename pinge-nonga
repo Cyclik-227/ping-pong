@@ -16,7 +16,7 @@ display.set_caption('Пинг Понг')
 
 background = transform.scale(image.load('tenis.jpg'), (win_width, win_height))
 
-font = pygame.font.SysFont('Arial', 50) 
+font = font.SysFont('Arial', 60) 
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):  
@@ -86,14 +86,14 @@ while game:
     
     result = ball.update()
     if result == 'left':
-        text = font.render('Правая ракетка проиграла', True, (255, 0, 0))
-        window.blit(text, (win_width // 4, win_height // 2))
+        text = font.render('Правая ракетка проиграла', True, (0, 0, 0))
+        window.blit(text, (230, 300))
         display.update()
         pygame.time.delay(2000) 
         game = False
     elif result == 'right':
-        text = font.render('Левая ракетка проиграла', True, (255, 0, 0))
-        window.blit(text, (win_width // 4, win_height // 2))
+        text = font.render('Левая ракетка проиграла', True, (0, 0, 0))
+        window.blit(text, (230, 300))
         display.update()
         pygame.time.delay(2000) 
         game = False
