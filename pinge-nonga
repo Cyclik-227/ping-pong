@@ -3,10 +3,10 @@ from pygame import *
 pygame.init()
 
 player_speed = 25
-ball_speed_x = 5
+ball_speed_x = 6
 ball_speed_y = 5
-win_width = 1000
-win_height = 500
+win_width = 1500
+win_height = 700
 FPS = 40
 game = True
 clock = time.Clock()
@@ -67,8 +67,8 @@ class Ball(GameSprite):
             if self.hit_count >= 3:
                 direction_x = 1 if self.speed_x > 0 else -1 
                 direction_y = 1 if self.speed_y > 0 else -1  
-                self.speed_x += 1 * direction_x 
-                self.speed_y += 1 * direction_y 
+                self.speed_x += 2 * direction_x 
+                self.speed_y += 2 * direction_y 
                 self.hit_count = 0 
 
         if self.rect.left <= 0:
@@ -78,7 +78,7 @@ class Ball(GameSprite):
         return None 
 
 raketka1 = Player('untitled2.png', 50, 300, 100, 170, player_speed)
-raketka2 = Player2('untitled3.png', 850, 300, 100, 170, player_speed)
+raketka2 = Player2('untitled3.png', 1350, 300, 100, 170, player_speed)
 ball = Ball('мяч.jpg', 500, 250, 70, 70, player_speed) 
 
 game_over = False
