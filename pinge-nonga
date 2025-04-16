@@ -51,6 +51,7 @@ class Ball(GameSprite):
         super().__init__(player_image, player_x, player_y, size_x, size_y, player_speed)
         self.speed_x = ball_speed_x
         self.speed_y = ball_speed_y
+        self.hit_count = 0 
 
     def update(self):
         self.rect.x += self.speed_x
@@ -61,16 +62,26 @@ class Ball(GameSprite):
 
         if sprite.collide_rect(self, raketka1) or sprite.collide_rect(self, raketka2):
             self.speed_x *= -1 
+            self.hit_count += 1 
 
-        if self.rect.left <= 0: 
+            if self.hit_count >= 3:
+                direction_x = 1 if self.speed_x > 0 else -1 
+                direction_y = 1 if self.speed_y > 0 else -1  
+                self.speed_x += 1 * direction_x 
+                self.speed_y += 1 * direction_y 
+                self.hit_count = 0 
+
+        if self.rect.left <= 0:
             return 'right' 
         if self.rect.right >= win_width: 
             return 'left'
-        return True 
+        return None 
 
 raketka1 = Player('untitled2.png', 50, 300, 100, 170, player_speed)
 raketka2 = Player2('untitled3.png', 850, 300, 100, 170, player_speed)
 ball = Ball('мяч.jpg', 500, 250, 70, 70, player_speed) 
+
+game_over = False
 
 while game:
     for e in event.get():
@@ -90,17 +101,20 @@ while game:
         window.blit(text, (230, 300))
         display.update()
         pygame.time.delay(2000) 
-        game = False
+        game_over = True
     elif result == 'right':
         text = font.render('Левая ракетка проиграла', True, (0, 0, 0))
         window.blit(text, (230, 300))
         display.update()
-        pygame.time.delay(2000) 
-        game = False
+        pygame.time.delay(2000)
+        game_over = True
 
     ball.reset()
 
     display.update()
     clock.tick(FPS)
+
+    if game_over:
+        break
 
 pygame.quit()
