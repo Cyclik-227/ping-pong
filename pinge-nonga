@@ -5,16 +5,18 @@ pygame.init()
 player_speed = 25
 ball_speed_x = 5
 ball_speed_y = 5
-win_width = 650
+win_width = 1000
 win_height = 500
 FPS = 40
 game = True
 clock = time.Clock()
 
-window = display.set_mode((1000, win_height))
-display.set_caption('пинг понг')
+window = display.set_mode((win_width, win_height))
+display.set_caption('Пинг Понг')
 
-background = transform.scale(image.load('tenis.jpg'), (1000, win_height))
+background = transform.scale(image.load('tenis.jpg'), (win_width, win_height))
+
+font = pygame.font.SysFont('Arial', 50) 
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):  
@@ -60,8 +62,10 @@ class Ball(GameSprite):
         if sprite.collide_rect(self, raketka1) or sprite.collide_rect(self, raketka2):
             self.speed_x *= -1 
 
-        if self.rect.left <= 0 or self.rect.right >= 1000:
-            return False  
+        if self.rect.left <= 0: 
+            return 'right' 
+        if self.rect.right >= win_width: 
+            return 'left'
         return True 
 
 raketka1 = Player('untitled2.png', 50, 300, 100, 170, player_speed)
@@ -80,8 +84,18 @@ while game:
     raketka2.update()
     raketka2.reset()
     
-    if not ball.update():
-        print("Игра окончена!")  
+    result = ball.update()
+    if result == 'left':
+        text = font.render('Правая ракетка проиграла', True, (255, 0, 0))
+        window.blit(text, (win_width // 4, win_height // 2))
+        display.update()
+        pygame.time.delay(2000) 
+        game = False
+    elif result == 'right':
+        text = font.render('Левая ракетка проиграла', True, (255, 0, 0))
+        window.blit(text, (win_width // 4, win_height // 2))
+        display.update()
+        pygame.time.delay(2000) 
         game = False
 
     ball.reset()
