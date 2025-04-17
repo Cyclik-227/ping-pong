@@ -65,8 +65,16 @@ class Ball(GameSprite):
             self.hit_count += 1 
 
             if self.hit_count >= 3:
-                direction_x = 1 if self.speed_x > 0 else -1 
-                direction_y = 1 if self.speed_y > 0 else -1  
+                if self.speed_x > 0:
+                    direction_x = 1 
+                else:
+                     direction_x = -1 
+
+                if self.speed_y > 0:
+                    direction_y = 1
+                else:
+                     direction_y = -1  
+                     
                 self.speed_x += 2 * direction_x 
                 self.speed_y += 2 * direction_y 
                 self.hit_count = 0 
